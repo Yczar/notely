@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notely/app/ui/screens/create_a_note_screen.dart';
 import 'package:notely/app/ui/widgets/notely_form_field.dart';
 
 import '../../../src/utils/margins/y_margin.dart';
@@ -75,7 +76,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               ),
               NotelyButton(
                 text: 'Create Account',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const CreateANoteScreen(),
+                    ),
+                  );
+                },
               ),
               const YMargin(20),
               const Text(
