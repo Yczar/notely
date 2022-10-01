@@ -5,9 +5,11 @@ class NotelyButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
+    this.loading = false,
   }) : super(key: key);
   final String text;
   final VoidCallback onPressed;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class NotelyButton extends StatelessWidget {
     return SizedBox(
       width: size.width,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: loading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(
             vertical: 24,
@@ -27,14 +29,23 @@ class NotelyButton extends StatelessWidget {
           elevation: 0,
           backgroundColor: theme.colorScheme.secondary,
         ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w900,
-            color: Color(0xFFFFFBFA),
-          ),
-        ),
+        child: loading
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFFFFFBFA),
+                ),
+              ),
       ),
     );
   }
