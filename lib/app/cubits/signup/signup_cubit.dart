@@ -1,31 +1,32 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notely/app/cubits/signup/signup_state.dart';
+
+import '../../model/user.dart';
 
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
 
   Future<void> signup(
-    String email,
-    String password,
+    User? userParams,
   ) async {
     emit(SignupLoading());
     try {
-      final userCredential =
+      final userCredentialResult =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: userParams?.email ?? '',
+        password: userParams?.password ?? '',
       );
-      final user = userCredential.user;
-      if (user != null) {
+      final userCredential = userCredentialResult.user;
+      if (userCredential != null) {
         log('Successfully signed up');
-        emit(
-          SignupLoaded(
-            user: user,
-          ),
+        final user = userParams?.copyWith(
+          id: userCredential.uid,
         );
+        _createUser(user!);
       } else {
         emit(
           const SignupError(
@@ -49,6 +50,25 @@ class SignupCubit extends Cubit<SignupState> {
       );
     }
   }
-}
 
+  Future<void> _createUser(User user) async {
+    final firestore = FirebaseFirestore.instance;
+    try {
+      await firestore.collection('user').doc(user.id).set(
+            user.toMap(),
+          );
+      emit(
+        SignupLoaded(
+          user: user,
+        ),
+      );
+    } catch (e) {
+      emit(
+        SignupError(
+          e.toString(),
+        ),
+      );
+    }
+  }
+}
 /// Firestore

@@ -9,3 +9,9 @@ Future<void> main() async {
     const Notely(),
   );
 }
+/// Widget -> What is being rendered
+/// 
+/// Render Object -> Responsible for sizes and layout used in painting your 
+/// widget to your screen.
+/// Element -> 
+/// 

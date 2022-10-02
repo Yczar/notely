@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:notely/app/cubits/auth/auth_cubit.dart';
+import 'package:notely/app/ui/components/note_empty_component.dart';
 import 'package:notely/app/ui/components/note_item_component.dart';
 import 'package:notely/src/utils/margins/y_margin.dart';
 
@@ -50,31 +51,33 @@ class _CreateANoteScreenState extends State<CreateANoteScreen> {
           ),
         ],
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: 28.0,
           ),
-          child: Column(
-            children: [
-              const YMargin(20),
-              Expanded(
-                child: StaggeredGrid.count(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  children: List.filled(
-                    10,
-                    const StaggeredGridTile.count(
-                      crossAxisCellCount: 2,
-                      mainAxisCellCount: 2,
-                      child: NoteItemComponent(),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: NoteEmptyComponent(),
+          // Column(
+          //   children: [
+          //     Container(),
+          //     const YMargin(20),
+          //     Expanded(
+          //       child: StaggeredGrid.count(
+          //         crossAxisCount: 4,
+          //         mainAxisSpacing: 4,
+          //         crossAxisSpacing: 4,
+          //         children: List.filled(
+          //           10,
+          //           const StaggeredGridTile.count(
+          //             crossAxisCellCount: 2,
+          //             mainAxisCellCount: 2,
+          //             child: NoteItemComponent(),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );
