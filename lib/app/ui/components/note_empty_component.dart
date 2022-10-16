@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../src/utils/margins/y_margin.dart';
 import '../screens/create_a_note_screen.dart';
